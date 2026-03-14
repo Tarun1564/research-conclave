@@ -80,7 +80,7 @@ Top Papers
                         <td>
                             {% if data.top_papers %}
                             {% for paper in data.top_papers %}
-                            <p>{{ paper.file.name }} - {{ paper.overall_score }}</p>
+                            <p>{{ paper.file.url }} - {{ paper.overall_score }}</p>
                             {% endfor %}
                              {% else %}
                             <p>No papers evaluated yet.</p>

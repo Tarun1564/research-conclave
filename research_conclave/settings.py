@@ -46,7 +46,13 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '963728186599966',
     'API_SECRET': 'CMZK4FLiF93UzeyXhxXFcGWIF-w',
 }
+import cloudinary
 
+cloudinary.config(
+    cloud_name = CLOUDINARY_STORAGE['CLOUD_NAME'],
+    api_key = CLOUDINARY_STORAGE['API_KEY'],
+    api_secret = CLOUDINARY_STORAGE['API_SECRET']
+)
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -134,6 +140,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-MEDIA_URL = '/uploads/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads')
 CSRF_TRUSTED_ORIGINS=['https://*.ngrok-free.app']
