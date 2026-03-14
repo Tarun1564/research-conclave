@@ -48,7 +48,7 @@ def download_data(request, branch):
     for paper in Uploads.objects.filter(branch=branch):
         ws.append([
             paper.roll_number,
-            paper.file.name,
+            paper.file.url,
             paper.branch,
             paper.abstract,
             paper.research_methodology,
