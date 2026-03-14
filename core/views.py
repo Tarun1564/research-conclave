@@ -150,8 +150,6 @@ def upload(request):
     branches=["CSE","ECE",'MECH','CIVIL','EEE','IT','CSM','CSD']
     papers_data={}
     total_papers = 0
-    evaluated1_count = 0
-    evaluated2_count = 0
     total_evaluated=0
     for branch in branches:
         papers = Uploads.objects.filter(branch=branch)
