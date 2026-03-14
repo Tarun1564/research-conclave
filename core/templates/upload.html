@@ -71,33 +71,39 @@ Top Papers
                 </tr>
                 </thead>
                 <tbody>
-                    {% for branch, data in papers_data.items %}
-                    <tr>
-                        <td>{{ branch }}</td>
-                        <td>{{ data.total }}</td>
-                        <td>{{ data.evaluated1 }}</td>
-                        <td>{{ data.evaluated2 }}</td>
-                        <td>
-                            {% if data.top_papers %}
-                            {% for paper in data.top_papers %}
-                            <p>{{ paper.file.url }} - {{ paper.overall_score }}</p>
-                            {% endfor %}
-                             {% else %}
-                            <p>No papers evaluated yet.</p>
-                            {% endif %}
-                            <td><a href="{% url 'download_data' branch %}" class="btn btn-outline-primary btn-sm">Download Data</a></td>
-                            </tr>
-                        </td>
-                        
-                    </tr>
-                    {% endfor %}
-                </tbody>
+{% for branch, data in papers_data.items %}
+<tr>
+<td>{{ branch }}</td>
+<td>{{ data.total }}</td>
+<td>{{ data.evaluated1 }}</td>
+<td>{{ data.evaluated2 }}</td>
+<td>
+{% if data.top_papers %}
+{% for paper in data.top_papers %}
+<p>{{ paper.roll_number }} - {{ paper.overall_score }}</p>
+{% endfor %}
+{% else %}
+<p>No papers evaluated yet.</p>
+{% endif %}
+</td>
+<td>
+<a href="{% url 'download_data' branch %}" class="btn btn-outline-primary btn-sm">
+Download Data
+</a>
+</td>
+</tr>
+{% endfor %}
+</tbody>
                 <tfoot class="table-light">
-                    <tr>
-                        <th>Total</th>
-                        <th>{{ total_papers }}</th>
-                        <th colspan="2">{{ total_evaluated }}</th>
-                    </tr>
+<tr>
+<th>Total</th>
+<th>{{ total_papers }}</th>
+<th>{{ total_evaluated }}</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</tfoot>
             </table>
         </div>
     </div>
