@@ -45,7 +45,7 @@ CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dfbnvfee5',
     'API_KEY': '963728186599966',
     'API_SECRET': 'CMZK4FLiF93UzeyXhxXFcGWIF-w',
-    SECURE:True
+    'SECURE':True
 }
 import cloudinary
 
