@@ -151,12 +151,14 @@ def upload(request):
     papers_data={}
     total_papers = 0
     total_evaluated=0
+    evaluated1_count=0
+    evaluated2_count=0
     for branch in branches:
         papers = Uploads.objects.filter(branch=branch)
         top_papers = papers.order_by('-overall_score')[:5]
         count = papers.count()
-        evaluated1_count = Uploads.objects.filter(branch=branch,evaluations__evaluator__username=f"{branch}_evaluator1").distinct().count()
-        evaluated2_count = Uploads.objects.filter(branch=branch,evaluations__evaluator__username=f"{branch}_evaluator2").distinct().count()
+        evaluated1_count = Uploads.objects.filter(branch=branch,evaluations__evaluator__username=f"{branch.lower()}_evaluator1").distinct().count()
+        evaluated2_count = Uploads.objects.filter(branch=branch,evaluations__evaluator__username=f"{branch.lower()}_evaluator2").distinct().count()
         papers_data[branch] = {
         "total": count,
         "evaluated1": evaluated1_count,
