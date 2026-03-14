@@ -154,29 +154,18 @@ def upload(request):
     evaluated2_count = 0
     total_evaluated=0
     for branch in branches:
-
-    papers = Uploads.objects.filter(branch=branch)
-    top_papers = papers.order_by('-overall_score')[:5]
-
-    count = papers.count()
-
-    evaluated1_count = Evaluator.objects.filter(
-        evaluator__username=f"{branch}_evaluator1",
-        papers__branch=branch
-    ).values("papers").distinct().count()
-
-    evaluated2_count = Evaluator.objects.filter(
-        evaluator__username=f"{branch}_evaluator2",
-        papers__branch=branch
-    ).values("papers").distinct().count()
-
-    papers_data[branch] = {
+        papers = Uploads.objects.filter(branch=branch)
+        top_papers = papers.order_by('-overall_score')[:5]
+        count = papers.count()
+        evaluated1_count = Evaluator.objects.filter(evaluator__username=f"{branch}_evaluator1",papers__branch=branch).values("papers").distinct().count()
+        evaluated2_count = Evaluator.objects.filter(evaluator__username=f"{branch}_evaluator2",papers__branch=branch).values("papers").distinct().count()
+        papers_data[branch] = {
         "total": count,
         "evaluated1": evaluated1_count,
         "evaluated2": evaluated2_count,
         "top_papers": top_papers
     }
 
-    total_papers += count
-    total_evaluated += evaluated1_count + evaluated2_count
+        total_papers += count
+        total_evaluated += evaluated1_count + evaluated2_count
     return render(request,"upload.html",{"papers_data":papers_data,"total_papers":total_papers,"total_evaluated":total_evaluated})
