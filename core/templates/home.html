@@ -31,7 +31,7 @@ Logout
 
 {% for paper in papers %}
 <option value="{{ paper.id }}"
-data-url="{{ paper.file.url }}"
+data-url="{{ paper.file.url|cut:'http:' }}"
 {% if selected_paper and paper.id == selected_paper.id %}selected{% endif %}>
 {{ paper.file.url }}
 </option>
