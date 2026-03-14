@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Research Paper</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="d-flex justify-content-end mb-3">
+<form method="post" action="{% url 'logout' %}">
+{% csrf_token %}
+<button type="submit" class="btn btn-danger">
+Logout
+</button>
+</form>
+</div>
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white text-center py-3">
+                        <h4 class="mb-0">Upload Research Paper</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <input type="text" class="form-control" name="roll_number" placeholder="Roll Number">
+                            </div>
+                            <div class="mb-3">
+                                <label for="paper_file" class="form-label fw-bold">Select File</label>
+                                <input type="file" class="form-control" id="paper_file" name="file" required>
+                                <div class="form-text">Please upload your document in PDF or DOCX format.</div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="branch_select" class="form-label fw-bold">Select Branch</label>
+                                <select class="form-select" id="branch_select" name="branch" required>
+                                    <option value="" disabled selected>-- Choose a Branch --</option>
+                                    <option value="CSE">CSE</option>
+                                    <option value="EEE">EEE</option>
+                                    <option value="MECH">MECH</option>
+                                    <option value="CIVIL">CIVIL</option>
+                                    <option value="ECE">ECE</option>
+                                    <option value="IT">IT</option>
+                                    <option value="CSM">CSM</option>
+                                    <option value="CSD">CSD</option>
+
+                                </select>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">Upload</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <table class="table table-striped">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="Branch">Branch</th>
+                        <th scope="No Of Papers Uploaded">No of Papers Uploaded</th>
+                        <th scope="No Of Papers Evaluated">Evaluator 1</th>
+                        <th scope="No Of Papers Evaluated">Evaluator 2</th>
+                    <th scope="Top Papers"> 
+Top Papers
+                    </th>
+                    <th>Download Data</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for branch, data in papers_data.items %}
+                    <tr>
+                        <td>{{ branch }}</td>
+                        <td>{{ data.total }}</td>
+                        <td>{{ data.evaluated1 }}</td>
+                        <td>{{ data.evaluated2 }}</td>
+                        <td>
+                            {% if data.top_papers %}
+                            {% for paper in data.top_papers %}
+                            <p>{{ paper.file.name }} - {{ paper.overall_score }}</p>
+                            {% endfor %}
+                             {% else %}
+                            <p>No papers evaluated yet.</p>
+                            {% endif %}
+                            <td><a href="{% url 'download_data' branch %}" class="btn btn-outline-primary btn-sm">Download Data</a></td>
+                            </tr>
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot class="table-light">
+                    <tr>
+                        <th>Total</th>
+                        <th>{{ total_papers }}</th>
+                        <th colspan="2">{{ total_evaluated }}</th>
+                    </tr>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
