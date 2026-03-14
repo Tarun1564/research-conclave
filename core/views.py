@@ -155,15 +155,13 @@ def upload(request):
     total_evaluated=0
     for branch in branches:
         papers= Uploads.objects.filter(branch=branch)
-        evaluated_1=Evaluator.objects.filter(papers__branch=branch,evaluator__username=str(branch)+'_evaluator1').values_list('papers', flat=True)
-        evaluated_2=Evaluator.objects.filter(papers__branch=branch,evaluator__username=str(branch)+'_evaluator2').values_list('papers', flat=True)
         top_papers=papers.order_by('-overall_score')[:5]
         count=0
         evaluated_count=0
         if papers.exists():
             count=papers.count()
-            evaluated1_count=papers.filter(id__in=evaluated_1).count()
-            evaluated2_count=papers.filter(id__in=evaluated_2).count()
+            evaluated1_count = Evaluator.objects.filter(evaluator__username=f"{branch}_evaluator1",papers__branch=branch).values("papers").distinct().count()
+            evaluated2_count = Evaluator.objects.filter(evaluator__username=f"{branch}_evaluator2",papers__branch=branch).values("papers").distinct().count()
         papers_data[branch]={"total":count,"evaluated1":evaluated1_count,"evaluated2":evaluated2_count,"top_papers":top_papers}
         total_papers += count
         total_evaluated += evaluated1_count + evaluated2_count
